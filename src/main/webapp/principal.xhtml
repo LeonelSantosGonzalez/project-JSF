@@ -1,14 +1,101 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html">
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
 
 <h:head>
-<meta charset="ISO-8859-1"></meta>
-<title>Insert title here</title>
+
+	<title>Pantalla principal</title>
+	<h:outputStylesheet library="css" name="styles.css"></h:outputStylesheet>
+	<meta name="viewport" content="width=device-width, user-scalable=no"></meta>
 </h:head>
+<h:body>
 
 
-<body>
+   
+    <p:outputLabel>"Bienvenido #{sessionController.usuarioDTO.usuario} a la Pantalla Principal"</p:outputLabel>
+    
+    <h:form>
+    <p:commandButton value="Cerrar Sesion" action="#{sessionClosedController.cerrarSesion}"></p:commandButton>
+    
+    <p:dataTable id="tblEmpleados" var="empleado" value="#{principalController.empleados}" paginator="true" rows="10" paginatorPosition="bottom"
+                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}"
+                     currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} registros" reflow="true"
+                     rowsPerPageTemplate="5,10,{ShowAll|'All'}">
+      <f:facet name="{Exporters}">
+       <div class="flex justify-content-between">
+            
+                <p:commandButton value="XLS" styleClass="mr-2 mb-2">
+                    <p:dataExporter type="xls" target="tblEmpleados" fileName="ReporteEmpleados"/>
+                </p:commandButton>
 
-</body>
+                <p:commandButton value="XLSX" styleClass="mr-2 mb-2">
+                    <p:dataExporter type="xlsxstream" target="tblEmpleados" fileName="ReporteEmpleados"/>
+                </p:commandButton>
+
+                <p:commandButton value="PDF" styleClass="mr-2 mb-2" >
+                    <p:dataExporter type="pdf" target="tblEmpleados" fileName="ReporteEmpleados"/>
+                </p:commandButton>
+
+                <p:commandButton value="CSV" styleClass="mr-2 mb-2">
+                    <p:dataExporter type="csv" target="tblEmpleados" fileName="ReporteEmpleados" />
+                </p:commandButton>
+
+                <p:commandButton value="XML" styleClass="mr-2 mb-2">
+                    <p:dataExporter type="xml" target="tblEmpleados" fileName="ReporteEmpleados"/>
+                </p:commandButton>
+
+                <p:commandButton value="TXT" styleClass="mr-2 mb-2">
+                    <p:dataExporter type="txt" target="tblEmpleados" fileName="ReporteEmpleados" />
+                </p:commandButton>
+            </div> 
+            </f:facet>              
+                     
+                               
+                     
+		<p:column headerText="nombre" filterBy="#{empleado.nombre}" filterMatchMode="contains" sortBy="#{empleado.nombre}">
+		
+			
+			<h:outputText value="#{empleado.nombre}"></h:outputText>
+
+		</p:column>
+		
+		<p:column headerText="nombre" filterBy="#{empleado.primerApellido}" filterMatchMode="contains" sortBy="#{empleado.primerApellido}">
+		
+			
+			<h:outputText value="#{empleado.primerApellido}"></h:outputText>
+
+		</p:column>
+		
+		<p:column headerText="nombre" filterBy="#{empleado.segundoApellido}" filterMatchMode="contains" sortBy="#{empleado.segundoApellido}">
+		
+			
+			<h:outputText value="#{empleado.segundoApellido}"></h:outputText>
+
+		</p:column>
+		
+		<p:column headerText="nombre" filterBy="#{empleado.puesto}" filterMatchMode="contains" sortBy="#{empleado.puesto}">
+		
+			
+			<h:outputText value="#{empleado.puesto}"></h:outputText>
+
+		</p:column>
+		
+		<p:column headerText="nombre" filterBy="#{empleado.estatus}" filterMatchMode="contains">
+		
+		
+			<h:outputText value="HABILITADO" rendered="#{empleado.estatus}"></h:outputText>
+			<h:outputText value="INHABILITADO" rendered="#{!empleado.estatus}"></h:outputText>
+
+		</p:column>
+
+	</p:dataTable>
+    
+    </h:form>
+    
+    
+
+</h:body>
+
 </html>
